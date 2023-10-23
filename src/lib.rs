@@ -346,6 +346,30 @@ pub fn keysym(
     keysyms.get(column as usize).map(|&keysym| Keysym(keysym))
 }
 
+/// Get the keyboard code from a keyboard symbol
+///
+/// `min_keycode` and `max_keycode` can be retrieved from the X11 setup, and `keysyms_per_keycode` and `keysyms` can be
+/// retrieved from the X11 server through the `GetKeyboardMapping` request.
+pub fn keycode(
+    keysym: Keysym,
+    min_keycode: KeyCode,
+    max_keycode: KeyCode,
+    keysyms_per_keycode: u8,
+    keysyms: &[RawKeysym],
+) -> Option<KeyCode> {
+    for j in 0..keysyms_per_keycode {
+        for i in min_keycode.0..=max_keycode.0 {
+            let keycode = KeyCode::from(i);
+            if let Some(ks) = crate::keysym(keycode, j, min_keycode, keysyms_per_keycode, keysyms) {
+                if ks == keysym {
+                    return Some(keycode);
+                }
+            }
+        }
+    }
+    None
+}
+
 /// Convert a keysym to its uppercase/lowercase equivalents.
 const fn convert_case(keysym: Keysym) -> (Keysym, Keysym) {
     // by default, they're both the regular keysym
