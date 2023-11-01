@@ -413,7 +413,7 @@ const fn convert_case(keysym: Keysym) -> (Keysym, Keysym) {
         key::Cyrillic_YU..=key::Cyrillic_HARDSIGN => lower -= key::Cyrillic_YU - key::Cyrillic_yu,
         key::Cyrillic_yu..=key::Cyrillic_hardsign => upper += key::Cyrillic_YU - key::Cyrillic_yu,
         key::Greek_ALPHAaccent..=key::Greek_OMEGAaccent => {
-            lower += key::Greek_alphaaccent - key::Greek_ALPHAaccent
+            lower += key::Greek_alphaaccent - key::Greek_ALPHAaccent;
         }
         key::Greek_alphaaccent..=key::Greek_omegaaccent
             if !matches!(
@@ -421,11 +421,11 @@ const fn convert_case(keysym: Keysym) -> (Keysym, Keysym) {
                 key::Greek_iotaaccentdieresis | key::Greek_upsilonaccentdieresis
             ) =>
         {
-            upper -= key::Greek_alphaaccent - key::Greek_ALPHAaccent
+            upper -= key::Greek_alphaaccent - key::Greek_ALPHAaccent;
         }
         key::Greek_ALPHA..=key::Greek_OMEGA => lower += key::Greek_alpha - key::Greek_ALPHA,
         key::Greek_alpha..=key::Greek_omega if !matches!(keysym.0, key::Greek_finalsmallsigma) => {
-            upper -= key::Greek_alpha - key::Greek_ALPHA
+            upper -= key::Greek_alpha - key::Greek_ALPHA;
         }
         key::Armenian_AYB..=key::Armenian_fe => {
             lower |= 1;
