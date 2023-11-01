@@ -136,7 +136,7 @@ impl Keysym {
 
     /// Get a string corresponding to the name of this keyboard symbol.
     /// Unnamed keysyms representing a Unicode codepoint or invalid
-    /// keysyms return a `None`` value
+    /// keysyms return a `None` value
     ///
     /// The output of this function is not stable and is intended for debugging purposes.
     #[must_use]
