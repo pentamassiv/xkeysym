@@ -10239,7 +10239,7 @@ impl Keysym {
 }
 
 
-#[allow(unreachable_patterns)]
+#[allow(unreachable_patterns, clippy::too_many_lines)]
 pub(crate) const fn name(keysym: Keysym) -> Option<&'static str> {
     match keysym {
         Keysym::NoSymbol => Some("NoSymbol"),

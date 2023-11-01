@@ -100,7 +100,7 @@ pub mod key {{
 
     // The matcher for dumping the keysym's name.
     let mut keysym_dump = "
-#[allow(unreachable_patterns)]
+#[allow(unreachable_patterns, clippy::too_many_lines)]
 pub(crate) const fn name(keysym: Keysym) -> Option<&'static str> {
     match keysym {
         Keysym::NoSymbol => Some(\"NoSymbol\"),\n"
