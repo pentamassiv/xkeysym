@@ -53,11 +53,13 @@ pub struct KeyCode(RawKeyCode);
 
 impl KeyCode {
     /// Create a new `KeyCode` from a raw keyboard code.
+    #[must_use]
     pub const fn new(raw: RawKeyCode) -> Self {
         Self(raw)
     }
 
     /// Get the raw keyboard code.
+    #[must_use]
     pub const fn raw(self) -> RawKeyCode {
         self.0
     }
@@ -121,11 +123,13 @@ impl fmt::Debug for Keysym {
 
 impl Keysym {
     /// Create a new `Keysym` from a raw keyboard symbol.
+    #[must_use]
     pub const fn new(raw: RawKeysym) -> Self {
         Self(raw)
     }
 
     /// Get the raw keyboard symbol.
+    #[must_use]
     pub const fn raw(self) -> RawKeysym {
         self.0
     }
@@ -135,46 +139,55 @@ impl Keysym {
     /// keysyms return a `None`` value
     ///
     /// The output of this function is not stable and is intended for debugging purposes.
+    #[must_use]
     pub const fn name(self) -> Option<&'static str> {
         name(self)
     }
 
     /// Tell whether a keysym is a keypad key.
+    #[must_use]
     pub const fn is_keypad_key(self) -> bool {
         matches!(self.0, key::KP_Space..=key::KP_Equal)
     }
 
     /// Tell whether a keysym is a private keypad key.
+    #[must_use]
     pub const fn is_private_keypad_key(self) -> bool {
         matches!(self.0, 0x11000000..=0x1100FFFF)
     }
 
     /// Tell whether a keysym is a cursor key.
+    #[must_use]
     pub const fn is_cursor_key(self) -> bool {
         matches!(self.0, key::Home..=key::Select)
     }
 
     /// Tell whether a keysym is a PF key.
+    #[must_use]
     pub const fn is_pf_key(self) -> bool {
         matches!(self.0, key::KP_F1..=key::KP_F4)
     }
 
     /// Tell whether a keysym is a function key.
+    #[must_use]
     pub const fn is_function_key(self) -> bool {
         matches!(self.0, key::F1..=key::F35)
     }
 
     /// Tell whether a key is a miscellaneous function key.
+    #[must_use]
     pub const fn is_misc_function_key(self) -> bool {
         matches!(self.0, key::Select..=key::Break)
     }
 
     /// Tell whether a key is an unnamed Unicode codepoint.
+    #[must_use]
     pub const fn is_unnamed_unicode_key(self) -> bool {
         matches!(self.0, 0x01000000..=0x0110ffff)
     }
 
     /// Tell whether a key is a modifier key.
+    #[must_use]
     pub const fn is_modifier_key(self) -> bool {
         matches!(
             self.0,
@@ -188,6 +201,7 @@ impl Keysym {
     /// Translate a keyboard symbol to its approximate character.
     ///
     /// The translation follows the `xkb_keysym_to_utf32` function.
+    #[must_use]
     pub fn key_char(self) -> Option<char> {
         let keysym = self.0;
 
@@ -241,6 +255,7 @@ impl Keysym {
     /// Create a [`Keysym`] from the given `char`.
     ///
     /// This function replecates the `xkb_utf32_to_keysym` behavior.
+    #[must_use]
     pub fn from_char(ch: char) -> Self {
         let ucs = ch as u32;
 
@@ -299,6 +314,7 @@ pub const NO_SYMBOL: Keysym = Keysym::NoSymbol;
 ///
 /// `min_keycode` can be retrieved from the X11 setup, and `keysyms_per_keycode` and `keysyms` can be
 /// retrieved from the X11 server through the `GetKeyboardMapping` request.
+#[must_use]
 pub fn keysym(
     keycode: KeyCode,
     mut column: u8,
