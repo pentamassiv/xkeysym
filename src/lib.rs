@@ -111,6 +111,12 @@ impl fmt::Debug for Keysym {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.name() {
             Some(name) => f.write_str(name),
+            None if (0x0100_0100..=0x0110_FFFF).contains(&self.0) => {
+                // strip the 0x01000000 prefix
+                let codepoint = self.0 & 0x00FF_FFFF;
+                // Uppercase hex, no leading zeros: e.g. "UA1B2"
+                write!(f, "U{:X}", codepoint)
+            }
             None => write!(f, "{:#x}", self.0),
         }
     }
